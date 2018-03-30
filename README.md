@@ -2,6 +2,8 @@
 A glove based IMU controller that use EeonTex Variable Resistance Fabric to sense the gesture to control the computer.
 A 2nd Year Engineeing Design II Group Project at Acadia University
 
+Demo Video：https://youtu.be/c8829fM5WGY
+
 Group 12
 
 Parts List

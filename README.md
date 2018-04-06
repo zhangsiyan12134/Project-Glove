@@ -6,9 +6,8 @@ Demo Video：https://youtu.be/c8829fM5WGY
 
 Group 12
 
-Omar H. Khattab/ Project Manager
-
-Hannah MacCormnack/ Project Researcher
+Omar H. Khattab/ Project Manager<br />
+Hannah MacCormnack/ Project Researcher<br />
 
 Haolin Song/ Project Designer 
 

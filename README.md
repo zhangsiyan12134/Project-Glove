@@ -5,6 +5,11 @@ A 2nd Year Engineeing Design II Group Project at Acadia University
 Demo Video：https://youtu.be/c8829fM5WGY
 
 Group 12
+Omar H. Khattab/ Project Manager
+Hannah MacCormnack/ Project Researcher
+Haolin Song/ Project Designer 
+Siyan Zhang/ Project Technican
+
 
 Parts List
 

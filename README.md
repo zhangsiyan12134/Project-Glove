@@ -4,14 +4,14 @@ A 2nd Year Engineeing Design II Group Project at Acadia University
 
 Demo Video：https://youtu.be/c8829fM5WGY
 
-Group 12
+**Group 12**
 
 Omar H. Khattab/ Project Manager<br />
 Hannah MacCormnack/ Project Researcher<br />
 Haolin Song/ Project Designer<br />
 Siyan Zhang/ Project Technican<br />
 
-Parts List<br />
+**Parts List**<br />
 
 Part     Value          Device             Package         Library           Sheet<br />
 

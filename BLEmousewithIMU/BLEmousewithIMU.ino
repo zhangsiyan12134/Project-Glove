@@ -99,20 +99,20 @@ void error(const __FlashStringHelper*err) {
 /**************************************************************************/
 
 int getBattery(void){
-	
+//Convert battery voltage into 0~255 reading	
 	int value;
 	value = (analogRead(A7)*6.6/4096);
 	return map(value, 3.2, 4.2, 0, 255);
 }
 
 int LEDWrite(int R, int G){
-	
+//lit RGB LED with Green and Red.	
 	analogWrite(rgbRed, R);
 	analogWrite(rgbGreen, G);
 }
 
 int FadeIn(int Pin){
-  
+  //Lit cycle for RGB LED throught mixture of red, green and blue
   for (int fadeValue = 0 ; fadeValue <= 255; fadeValue += 5) {
     // sets the value (range from 0 to 255):
     analogWrite(Pin, fadeValue);
@@ -123,7 +123,7 @@ int FadeIn(int Pin){
 }
 
 int FadeOut(int Pin){
-
+//Off cycle for RGB LED throught mixture of red, green and blue
   for (int fadeValue = 255 ; fadeValue >= 0; fadeValue -= 5) {
     // sets the value (range from 0 to 255):
     analogWrite(Pin, fadeValue);
@@ -134,36 +134,43 @@ int FadeOut(int Pin){
 }
 
 int cmove(int x, int y){
+//send move data of mouse curser to bluetooth module according to the given x,y value.
      ble.print(F("AT+BleHidMouseMove="));
      ble.print(x);
      ble.print(",");
      ble.println(y);
-
      return 0;
 }
 
 int fingerRead(int finger, int offset){
-  
+//read one finger and give back a reading inbetween 0~4095
   int reading;
   reading = analogRead(finger)-offset;
 
-  return reading; //map(reading,0,4096,0,512);
+  return reading; //map(reading,0,4095,0,512);
 }
 
 int LeftClick(void){
-	int data = 0;
-	for( int i=0; i <= 10; i++){
-		if(fingerRead(middle, 0)> 2000 && fingerRead(ring, 0)> 2300){
-			data += 1;
-		} else {
-			data += 0;
-		}
-	}
-	if(data/10 >= 0.85){
-		return 1;
-	} else {
-		return 0;
-	}
+//read fingers and compare to the thresholds
+  int data = 0;
+  for( int i=0; i <= 10; i++){
+    if(fingerRead(middle, 0)> 2000 && fingerRead(ring, 0)> 2300){
+	data += 1;
+     } else {
+	data += 0;
+     }
+  }
+  /*
+  to filter the noise, the following lines are averaging how many reading is higher
+  than the thresholds in given numbers of continuous samples to be considered as a valid 
+  click. (in this case 85% reading has to be higher than thresholds in 10 continuous 
+  samples)  
+  */
+  if(data/10 >= 0.85){
+	return 1;
+  } else {
+	return 0;
+  }
 }
 
 void setup(void){
@@ -241,36 +248,37 @@ void setup(void){
 */
 /**************************************************************************/
 void loop(void){
+//Two main loops for enable and disable function	
   while(digitalRead(ModeSW) == 1){
 
     imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER); //get euler angle from IMU
 
     _x1 = (euler.x());
     _y1 = (euler.y());
-	_z1 = (euler.z());
+    _z1 = (euler.z());
 
-    _y2 = _y1- _y0;
+    _y2 = _y1- _y0;  //compare the current reading to previous reading to see how far hand was moved
     _x2 = _x1- _x0;
-    _y0 = _y1;
+    _y0 = _y1;  //Store current readings for next cycle
     _x0 = _x1; 
 	
-	if (_y2 != 0 or _x2 != 0){
-		xMove = _x2 * sensitivity * 1.5;
+    if (_y2 != 0 or _x2 != 0){
+	xMove = _x2 * sensitivity * 1.5;  //screen has greater length than width, times 1.5
         yMove = -(_y2) * sensitivity * 1;
+	//remove slight drifting when hand is not moving.    
+	if(yMove > 0){
+		drift = 1;
+	} else if(yMove < 0){
+		drift = -1;
+	} else {drift = 0;}
 		
-		if(yMove > 0){
-			drift = 1;
-		} else if(yMove < 0){
-			drift = -1;
-		} else {drift = 0;}
+	if(xMove > 0){
+		drift = 1;
+	} else if(xMove < 0){
+		drift = -1;
+	} else {drift = 0;}
 		
-		if(xMove > 0){
-			drift = 1;
-		} else if(xMove < 0){
-			drift = -1;
-		} else {drift = 0;}
-		
-        cmove(xMove-drift, yMove-drift); // move mouse on y axis
+        cmove(xMove-drift, yMove-drift); // send data and move mouse
 	}
 	
     /******************************************************/
@@ -296,30 +304,29 @@ void loop(void){
 	}*/
 	/******************************************************/
     
-	if(LeftClick() == 1){
+    if(LeftClick() == 1){
       ble.sendCommandCheckOK(F("AT+BleHidMouseButton=L,press"));
     }
     if(LeftClick() == 0){
       ble.sendCommandCheckOK(F("AT+BleHidMouseButton=0"));
     }
 	
-	if(debug){
-		Serial.print(xMove-drift);
-		Serial.print(",");
-		Serial.print(yMove-drift);
-		Serial.print(",");
-		Serial.print(fingerRead(index, 0)); //-200
-		Serial.print(",");
-		Serial.print(fingerRead(middle, 0)); //-600
-		Serial.print(",");
-		Serial.print(fingerRead(ring, 0)); //-450
-		Serial.print(",");
-		Serial.println(LeftClick());
+    if(debug){
+    //print real time reading to serial port(may lagging the movement)
+	Serial.print(xMove-drift);
+	Serial.print(",");
+	Serial.print(yMove-drift);
+	Serial.print(",");
+	Serial.print(fingerRead(index, 0));
+	Serial.print(",");
+	Serial.print(fingerRead(middle, 0));
+	Serial.print(",");
+	Serial.print(fingerRead(ring, 0));
+	Serial.print(",");
+	Serial.println(LeftClick());
     }
-	
-    //b = digitalRead(SW);
   }  
-  
+  //second main loop
   while(digitalRead(ModeSW) == 0){
 	FadeIn(rgbRed);
 	delay(1000);
@@ -335,5 +342,4 @@ void loop(void){
 	FadeOut(rgbBlue);
 	delay(1000);
   }
-  
 }

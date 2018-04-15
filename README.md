@@ -5,10 +5,10 @@ motion will change from pushing buttons and triggers to active movements of the 
 
 This is a 2nd Year Engineeing Design II Group Project at Acadia University.<br />
 
-**Current State**
+**Current State**<br />
 The basic function of mouse is working, but due to the limited performance and pooly optimized code, add any additional function will causes signifecant delay of the motion.
 
-**Todo List**
+**Todo List**<br />
 1. Simplify the code to make code more efficiency.
 2. Waiting for **New** ATSAMD51 series with hardware DSP and Float Point support.
 
@@ -17,7 +17,7 @@ The basic function of mouse is working, but due to the limited performance and p
 
 Demo Video：https://youtu.be/c8829fM5WGY
 
-**Group 12**
+**Group 12**<br />
 
 Omar H. Khattab/ Project Manager<br />
 Hannah MacCormnack/ Project Researcher<br />

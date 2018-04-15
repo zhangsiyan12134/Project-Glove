@@ -1,6 +1,17 @@
-# Project-Glove
-A glove based IMU controller that use EeonTex Variable Resistance Fabric to sense the gesture to control the computer.
-A 2nd Year Engineeing Design II Group Project at Acadia University
+# Project-Glove<br />
+This project is to create a hand glove that capture motions to control a computer or other
+devices. It will increase capacity of control in VR and other computer systems. The range of
+motion will change from pushing buttons and triggers to active movements of the hands.
+
+This is a 2nd Year Engineeing Design II Group Project at Acadia University.<br />
+
+**Current State**
+The basic function of mouse is working, but due to the limited performance and pooly optimized code, add any additional function will causes signifecant delay of the motion.
+
+**Todo List**
+1. Simplify the code to make code more efficiency.
+2. Waiting for **New** ATSAMD51 series with hardware DSP and Float Point support.
+
 
 ![Image of Glove](https://github.com/zhangsiyan12134/Project-Glove/raw/master/29748747_10155416341501417_397483712_o.jpg)
 

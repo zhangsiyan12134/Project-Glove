@@ -5,6 +5,13 @@ motion will change from pushing buttons and triggers to active movements of the 
 
 This is a 2nd Year Engineeing Design II Group Project at Acadia University.<br />
 
+**Group 12**<br />
+
+Omar H. Khattab/ Project Manager<br />
+Hannah MacCormnack/ Project Researcher<br />
+Haolin Song/ Project Designer<br />
+Siyan Zhang/ Project Technican<br />
+
 **Current State**<br />
 The basic function of mouse is working, but due to the limited performance and pooly optimized code, add any additional function will causes signifecant delay of the motion.
 
@@ -17,12 +24,6 @@ The basic function of mouse is working, but due to the limited performance and p
 
 Demo Video：https://youtu.be/c8829fM5WGY
 
-**Group 12**<br />
-
-Omar H. Khattab/ Project Manager<br />
-Hannah MacCormnack/ Project Researcher<br />
-Haolin Song/ Project Designer<br />
-Siyan Zhang/ Project Technican<br />
 
 **Parts List**<br />
 

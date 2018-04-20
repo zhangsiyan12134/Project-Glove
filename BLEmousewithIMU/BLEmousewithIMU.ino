@@ -1,9 +1,6 @@
 /*
-  This example shows how to send HID (keyboard/mouse/etc) data via BLE
-  Note that not all devices support BLE Mouse!
-  - OSX, Windows 10 both work
-  - Android has limited support
-  - iOS completely ignores mouse
+This is the program for Adafruit Feather M0 Bluefruit LE with Adafruit BNO055 IMU Module.
+In theory, it can be directly uses on Arduino M0 with Adafruit Bluefruit LE SPI Friend and Adafruit BNO055 IMU Module.
 */
 
 //include libraries for microcontroller and BLE module
@@ -151,7 +148,11 @@ int fingerRead(int finger, int offset){
 }
 
 int LeftClick(void){
-//read fingers and compare to the thresholds
+/*
+Read fingers and compare to the thresholds, adjust thresholds and fingers with debug flag enabled.
+Reading from finger is in between 0 to 4095.
+All five fingers are avaliable as input(thumb, index, middle, ring and pinky).
+*/
   int data = 0;
   for( int i=0; i <= 10; i++){
     if(fingerRead(middle, 0)> 2000 && fingerRead(ring, 0)> 2300){

@@ -1,6 +1,6 @@
 /*
-This is the program for Adafruit Feather M0 Bluefruit LE with Adafruit BNO055 IMU Module.
-In theory, it can be directly uses on Arduino M0 with Adafruit Bluefruit LE SPI Friend and Adafruit BNO055 IMU Module.
+This is the program for Adafruit Feather M0 Bluefruit LE with Adafruit BNO08X IMU Module.
+In theory, it can be directly uses on Arduino M0 with Adafruit Bluefruit LE SPI Friend and Adafruit BNO08X IMU Module.
 */
 
 //include libraries for microcontroller and BLE module
@@ -14,12 +14,12 @@ In theory, it can be directly uses on Arduino M0 with Adafruit Bluefruit LE SPI 
 //include libraries for IMU
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
-#include <Adafruit_BNO055.h>
+#include <Adafruit_BNO08X.h>
 #include <utility/imumaths.h>
 
 //Set IMU sample rate and rename the sensor in bno
-#define BNO055_SAMPLERATE_DELAY_MS (10)
-Adafruit_BNO055 bno = Adafruit_BNO055();
+#define BNO08X_SAMPLERATE_DELAY_MS (10)
+Adafruit_BNO08X bno = Adafruit_BNO08X();
 
 //define all the pin numbers
 
@@ -90,7 +90,7 @@ void error(const __FlashStringHelper*err) {
 
 /**************************************************************************/
 /*!
-    @brief  Sets up the HW an the BLE module (this function is called
+    @brief  Sets up the HW and the BLE module (this function is called
             automatically on startup)
 */
 /**************************************************************************/
@@ -191,8 +191,8 @@ void setup(void){
   //initialize IMU module
   if(!bno.begin())
   {
-    /* There was a problem detecting the BNO055 ... check your connections */
-    Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
+    /* There was a problem detecting the BNO08X ... check your connections */
+    Serial.print("Ooops, no BNO08X detected ... Check your wiring or I2C ADDR!");
     while(1);
   }
   bno.setExtCrystalUse(true); //set IMU module to use external crystal 
@@ -252,7 +252,7 @@ void loop(void){
 //Two main loops for enable and disable function	
   while(digitalRead(ModeSW) == 1){
 
-    imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER); //get euler angle from IMU
+    imu::Vector<3> euler = bno.getVector(Adafruit_BNO08X::VECTOR_EULER); //get euler angle from IMU
 
     _x1 = (euler.x());
     _y1 = (euler.y());
